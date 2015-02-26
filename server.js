@@ -45,7 +45,7 @@ function onListen(err) {
 }
 
 function onBrokerLost() {
-  loggerl.log({ type: 'error', message: 'disconnected', service: 'broker' });
+  logger.log({ type: 'error', message: 'disconnected', service: 'broker' });
   process.exit();
 }
 
