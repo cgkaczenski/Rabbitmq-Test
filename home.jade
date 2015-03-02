@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Node Summit '15
+    title Prototype 2
 
     style.
 
@@ -12,10 +12,11 @@ html
       }
 
   body
-    h1 Node Summit '15
+    h1 Message Bus Prototype
     h2 Weather
     p #{weather}
-    h2 A quote to live by
-    blockquote #{quote}
-    h2 Cute image of the day
-    img(src=cute)
+    
+- if (typeof(test) !== 'undefined'){
+      h3 Test Result
+      p  #{testresult} 
+- }

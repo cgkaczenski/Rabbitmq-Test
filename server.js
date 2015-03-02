@@ -11,7 +11,7 @@ var parallel = require('./parallel');
 
 // Config
 
-var RABBIT_URL = process.env.CLOUDAMQP_URL || 'amqp://localhost';
+var RABBIT_URL = process.env.CLOUDAMQP_URL || 'amqp://gbdgnqhr:RfSRtr52b2uhlnXpBV7DD531GZsBcVDk@tiger.cloudamqp.com/gbdgnqhr';
 var PORT = process.env.PORT || 5000;
 var SERVICE_TIME = process.env.SERVICE_TIME || 500;
 
@@ -27,7 +27,7 @@ var broker = jackrabbit(RABBIT_URL, 1)
 var server = express()
   .set('view engine', 'jade')
   .set('view cache', true)
-  .get('/', parallel([ getWeather, getQuote, getCute ], SERVICE_TIME), renderHome)
+  .get('/', parallel([ getTest, getWeather, getQuote, getCute ], SERVICE_TIME), renderHome)
   .listen(PORT, onListen);
 
 // Callbacks
@@ -47,6 +47,21 @@ function onListen(err) {
 function onBrokerLost() {
   logger.log({ type: 'error', message: 'disconnected', service: 'broker' });
   process.exit();
+}
+
+function getTest(req,res,next) {
+    res.locals.test = req.query.test;
+    if (typeof(req.query.zip) === 'undefined'){
+	console.log(typeof(req.query.zip));
+	res.locals.testresult = 'zip undefined';
+    }else if ((req.query.zip).length != 5){
+	console.log("not right length");
+	res.locals.testresult = 'zip incorrect length'; 	    
+    }else {
+	console.log(req.query.zip);
+	res.locals.testresult = 'valid zip length'; 
+    }
+    next();
 }
 
 function getWeather(req, res, next) {
